@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="UTF-8">
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<title>Insert title here修改</title>
+</head>
+<body>
+	<% out.println("第一步"); %>
+	<input type="text" id="txtRowCount">
+	<button id="btnQuery">查詢</button>
+	<table id="tblInfo">
+		<tr>
+			<th>用戶ID</th>
+			<th>用戶名</th>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		$("#btnQuery").click(function(){
+			$("#tblInfo tr:not(:first)").remove();
+			var dict={}
+			
+			strRowCount=$("#txtRowCount").val();
+			
+			dict["row_count"]=strRowCount;
+			
+			$.ajax({
+				url:'Hello',
+				type:'POST',
+				data:dict,
+				dataType:'json',
+				async:true,
+				success:function(pResult){
+					if(pResult.result=="OK"){
+						alert("ok");
+					}
+					$.each(pResult.emp_info,function(i,info){
+						strEmpNo='<td>'+info.strEmpNo+'</td>';
+						strEmpName='<td>'+info.strEmpName+'</td>';
+						tr='<tr>'+strEmpNo+strEmpName+'</tr>';
+						$("#tblInfo").append(tr);
+					});
+				},
+				error:function(pResult){
+					alert('NG');
+				}
+			});
+		});
+		
+		$(document).ready(function(){
+			
+		});
+	</script>
+</body>
+</html>
