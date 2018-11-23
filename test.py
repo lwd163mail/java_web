@@ -1,6 +1,8 @@
 import datetime
 import cx_Oracle
 
+print "ok"
+
 now = datetime.datetime.now()+ datetime.timedelta(days=1)
 Start_Date=now.strftime('%Y/%m/%d')
 Start_Time=now.strftime('%H:%M')
